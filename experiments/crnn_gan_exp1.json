@@ -1,0 +1,34 @@
+{"exp_id":"exp_crnngan",
+"tests":{
+"t1":
+    {
+    "datadir":"datasets/",
+    "traindir":"experiments/exp_crnngan/t1","feature_matching":"True",
+    "adam":"True","testname":"exp_1",
+    "n_samples":100, "timesteps":24,
+    "n_features":4,"filename":"data_test.npy",
+    "epochs_per_checkpoint":2,"pretraining_epochs":0,
+    "batch_size":75,"epochs_before_decay":1000,
+    "lr_decay":0.00005,"hidden_size_d":28,
+    "hidden_size_g":28, "max_epoch":4,
+    "keep_prob":1.0, "learning_rate":0.0001,
+    "num_layers_d":1, "num_layers_g":1,
+    "ignore_saved_args": "True"},
+"t2":
+    {
+    "datadir":"datasets/",
+    "traindir":"experiments/exp_crnngan/t2","feature_matching":"True",
+    "adam":"True","testname":"exp_2",
+    "n_samples":100, "timesteps":24,
+    "n_features":4,"filename":"data_test.npy",
+    "epochs_per_checkpoint":2,"pretraining_epochs":0,
+    "batch_size":50,"epochs_before_decay":1000,
+    "lr_decay":0.00005,"hidden_size_d":28,
+    "hidden_size_g":28, "max_epoch":4,
+    "keep_prob":1.0, "learning_rate":0.0005,
+    "num_layers_d":1, "num_layers_g":1,
+    "ignore_saved_args": "True"}
+
+
+    }
+}
