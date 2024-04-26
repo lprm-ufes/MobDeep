@@ -1,0 +1,18 @@
+{"exp_id":"exp_crnngan",
+"tests":{
+"t1":
+    {
+    "datadir":"models/c_rnn_gan/data/",
+    "traindir":"waze/wz_1/","feature_matching":"True",
+    "adam":"True","testname":"data_test.npy",
+    "n_samples":250, "timesteps":24,
+    "n_features":4,"filename":"data_test.npy",
+    "epochs_per_checkpoint":2,"pretraining_epochs":0,
+    "batch_size":75,"epochs_before_decay":1000,
+    "lr_decay":0.00005,"hidden_size_d":28,
+    "hidden_size_g":28, "max_epoch":200,
+    "keep_prob":1.0, "learning_rate":0.0001,
+    "num_layers_d":1, "num_layers_g":1
+    }
+    }
+}
