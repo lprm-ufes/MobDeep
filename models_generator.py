@@ -44,8 +44,25 @@ def train_rgan(exp_settings):
         command_t = command + parameter_lists
         subprocess.call(command_t, shell=True)
 
-def train_timegan():
-    raise NotImplementedError
+def train_timegan(exp_settings):
+    """
+    Train TimeGAN models
+
+    Params:
+        - exp_settings: training setting for the models
+    """
+    command = "python models/timegan/train_model.py"
+    parameter_lists = ""
+    test_list = exp_settings["tests"].keys()
+    for t in test_list:
+        key_parameters = exp_settings["tests"][t]
+        for k in key_parameters:
+            parameter_lists += " --{} {}".format(k,exp_settings["tests"][t][k])
+        parameter_lists +=" --exp_id {}".format(exp_settings['exp_id'])
+        parameter_lists +=" --test_id {}".format(t)
+        command_t = command + parameter_lists
+        subprocess.call(command_t, shell=True)
+    
 
 def train_models(model, exp_settings):
     """
@@ -91,12 +108,13 @@ def test_rgan():
     train_models(model,exp_settings)
 
 def test_timegan():
-    model = "timegan"
+    model = "timegan_exp1.json"
     exp_settings = u.load_experiment(model)
     exp_id = exp_settings['exp_id']
     print (exp_id)
     print (exp_settings['tests'].keys())
     u.creat_directories(exp_id, exp_settings)
+    train_models("timegan", exp_settings)
 
 def test_arima():
     model = "arima"
@@ -120,4 +138,5 @@ experiment_id = "exp1"
 tests = ["t1","t2", "t3"]
 #u.creat_directories(experiment_id, tests)
 #test_crnngan()
-test_rgan()
+# test_rgan()
+test_timegan()
