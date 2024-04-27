@@ -67,10 +67,17 @@ def synth_rgan(exp_json, n_samples, rgan_params, test_lists):
                 print ("Ignoring...")
                 pass
         
+def synth_timegan(exp_json, n_samples, test_lists):
 
-
-def synth_timegan():
-    pass
+    command = "python models/timegan/generate_samples.py"
+    path_to_exp = "experiments/{}".format(exp_json['exp_id'])
+    for t in test_lists:
+        settings = exp_json['tests'][t]
+        path_to_exp_t = path_to_exp+"/"+t
+        command += " --dataset {} --path_to_exp {} --n_samples {}".format(
+            settings["dataset"],
+            path_to_exp_t, n_samples)
+        subprocess.call(command, shell=True)
 
 def synth_data(model, exp_file, n_samples=5, rgan_params={'param_id':None}):
     #TODO: se modelo for c-rnn-gan tem que pegar o checkpoint
@@ -82,7 +89,7 @@ def synth_data(model, exp_file, n_samples=5, rgan_params={'param_id':None}):
     elif model == "rgan":
         synth_rgan(exp, n_samples, rgan_params, test_lists)
     elif model == "timegan":
-        synth_timegan()
+        synth_timegan(exp, n_samples, test_lists)
     else:
         print ("Model {} doesn't exist. The avaliable models are:\n".format(model)+
         "- crnngan\n- rgan\n- timegan\n- \arima")
@@ -103,4 +110,5 @@ def save_samples(path,sample_name, samples):
 
 
 # synth_data("crnngan","crnngan_exp1.json", n_samples=3)
-synth_data("rgan","rgan_exp1.json", n_samples=3, rgan_params={'param_id':'test2_1'})
+# synth_data("rgan","rgan_exp1.json", n_samples=3, rgan_params={'param_id':'test2_1'})
+synth_data("timegan", "timegan_exp1.json", n_samples=2)
