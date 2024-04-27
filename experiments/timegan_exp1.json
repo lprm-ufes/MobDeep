@@ -1,0 +1,14 @@
+{"exp_id":"exp_timegan",
+"tests":{
+"t1":
+    {
+    "dataset":"datasets/data_test.npy",
+    "timestamps":10,
+    "num_steps":10,
+    "hidden_dimensions":50, 
+    "noise_dimensions":50, 
+    "dimensions":50, 
+    "learning_rate":0.0005, 
+    "batch_sizes":10}
+    }
+}
