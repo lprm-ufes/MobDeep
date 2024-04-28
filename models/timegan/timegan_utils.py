@@ -200,11 +200,15 @@ def load_residual_model(folder):
   model = load_model(f'models/{folder}/rnn.h5')      
   return model
 
-def get_dataset(file, timesteps=10):
+def get_dataset(file, timesteps=10, scale=False):
   data = np.load(file, )
-  scaler = MinMaxScaler().fit(data.reshape(-1,1))
-  X = scaler.transform(data.reshape(-1,1))
-  X = X.reshape(data.shape[0]//timesteps, timesteps, data.shape[-1])
+  scaler = None
+  if scale:
+    scaler = MinMaxScaler().fit(data.reshape(-1,1))
+    X = scaler.transform(data.reshape(-1,1))
+  X = data
+  if data.ndim<3:
+    X = X.reshape(data.shape[0]//timesteps, timesteps, data.shape[-1])
   return X, scaler
 
 def get_timestamps(file):
@@ -251,18 +255,16 @@ def TRTS(real, synth, rnn, y_real, nsteps=10, normalise=False, fr=(-1,1)):
   mae = mean_absolute_error(y_synth, y_pred)
   return mae
 
-def generate_timegan_samples(parent_folder, real_data, n_samples=50):
-  training_folders = glob.glob(parent_folder+"*/")
+def generate_timegan_samples(real_data, path_to_exp, n_samples=50):
+  print ("Opa funciona")
   max_size = real_data.shape[0]
-  for tf in training_folders:
-    synth = TimeGAN.load(tf+"model.pkl")
-    sample_folder = os.path.join(tf, "samples")
-    os.makedirs(sample_folder)
-    print (f"{tf}", end="\r")
-    for i in range(n_samples):
-      synth_s = synth.sample(max_size)
-      synth_s = synth_s[:max_size]
-      np.save(sample_folder+f"/{i}.npy", synth_s)
+  path_to_model = path_to_exp+"/models/model.pkl"
+  path_to_samples = path_to_exp+"/synthdata"
+  synth = TimeGAN.load(path_to_model)
+  for i in range(n_samples):
+    synth_s = synth.sample(max_size)
+    synth_s = synth_s[:max_size]
+    np.save(path_to_samples+f"/{i}.npy", synth_s)
 
 def generate_timegan_best(model_path, sample_folder, real_data, n_samples=1000):
   max_size = real_data.shape[0]
