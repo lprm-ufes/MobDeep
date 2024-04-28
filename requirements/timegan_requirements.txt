@@ -1,0 +1,12 @@
+dtw
+tqdm==4.64.0
+pandas==1.3.5
+numpy==1.19.*
+tensorflow==2.6.4
+tensorflow-probability==14.0.0
+typeguard==2.13.*
+matplotlib
+scikit-learn
+protobuf==3.19.*
+seaborn
+category_encoders
